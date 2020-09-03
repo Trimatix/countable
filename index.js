@@ -48,7 +48,7 @@ client.on("message", (message) => {
 
 	// Attempt to retrieve the settings for the current server, otherwise loading a copy of the
 	// default settings.
-	guildSettings = client.settings.ensure(message.guild.id, defaultSettings);
+	const guildSettings = client.settings.ensure(message.guild.id, defaultSettings);
 
 	// Behaviour for messages sent in non-counting channels.
 	if (message.channel.id !== guildSettings.countingChannelID) {
@@ -101,8 +101,8 @@ client.on("message", (message) => {
 	}
 
 	// Split the message up into parts.
-	messageSplit = message.content.split(" ");
-	messageNumber = messageSplit[0];
+	const messageSplit = message.content.split(" ");
+	let messageNumber = messageSplit[0];
 
 	// Regex testing for a string being a number.
 	const isNumber = (n) => /^\d+$/.test(n);
@@ -139,6 +139,8 @@ client.on("message", (message) => {
 			.catch((err) => console.error(err));
 	} else {
 		client.settings.inc(message.guild.id, "nextCount");
+
+		// message.channel.setTopic(client.settings.get(message.guild.id, "nextCount"));
 
 		// Update the highest score for the server, to keep track of when to pin.
 		if (messageNumber > guildSettings.highestCount) {
