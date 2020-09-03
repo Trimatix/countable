@@ -23,6 +23,7 @@ const defaultSettings = {
 	highestCount: 0,
 	highestMessageID: "",
 	prevUserID: "",
+	dunceRoleID: "",
 };
 
 // Create a new collection to store the bot's commands.
