@@ -150,4 +150,28 @@ client.on("message", (message) => {
 	}
 });
 
+client.on("messageDelete", (message) => {
+	// Attempt to retrieve the settings for the current server, otherwise loading a copy of the
+	// default settings.
+	const guildSettings = client.settings.ensure(message.guild.id, defaultSettings);
+
+	if (message.channel.id !== guildSettings.countingChannelID) return;
+
+	// Potentially better solution to set the value of nextCount to whatever the value in the previous
+	// method is, but it's vulnerable to people editing their message to arbitrary numbers/values
+	// and breaking the bot
+	message.channel.messages
+		.fetch({ limit: 1 })
+		.then((messages) => {
+			const mostRecent = messages.first();
+			// console.log(
+			// 	`The next most recent message is by ${mostRecent.author.tag}, and it says: ${mostRecent.content}`,
+			// );
+
+			client.settings.set(message.guild.id, mostRecent.content.split(" ")[0], "nextCount");
+			console.log(client.settings.get(message.guild.id, "nextCount"));
+		})
+		.catch((err) => console.error(err));
+});
+
 client.login(CLIENT_TOKEN);
