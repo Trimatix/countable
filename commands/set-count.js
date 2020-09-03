@@ -1,6 +1,6 @@
 module.exports = {
 	name: "set-count",
-	description: "Sets the value of nextCount the number provided by the user.",
+	description: "Sets the expected value for the next count.",
 	args: true,
 	guildOnly: true,
 	ownerOnly: true,
