@@ -6,7 +6,7 @@ module.exports = {
 	ownerOnly: true,
 	usage: "<role ID>",
 	execute(message, args) {
-		const role = message.guild.roles
+		message.guild.roles
 			.fetch(args[0])
 			.then((role) => {
 				console.log(role);
