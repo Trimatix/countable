@@ -131,6 +131,8 @@ client.on("message", (message) => {
 		message.channel.send(":boom: **Wrong number!**");
 		client.settings.set(message.guild.id, 1, "nextCount");
 
+		console.log(message.author.roles.cache);
+
 		// Fetch the message-to-be-pinned by its ID, and then pin it.
 		message.channel.messages
 			.fetch(guildSettings.highestMessageID)
